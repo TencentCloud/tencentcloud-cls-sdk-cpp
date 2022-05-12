@@ -1,0 +1,21 @@
+syntax = "proto2";
+package cls_config;
+
+message LogProducerConfig{
+  optional uint64 TotalSizeLnBytes = 1[default=104857600];
+  optional uint64 MaxSendWorkerCount = 2[default=50];
+  optional uint64 MaxBlockSec = 3[default=60];
+  optional uint64 MaxBatchSize = 4[default=524288];
+  optional uint64 LingerMs = 5[default=2000];
+  optional uint64 Retries = 6[default=10];
+  optional uint64 BaseRetryBackoffMs = 7[default=100];
+  optional uint64 MaxRetryBackoffMs = 8[default=50000];
+  optional bool compressflag = 9[default=true];
+  optional string source = 10;
+  optional uint64 SockTimeout = 11[default=30];
+  optional uint64 ConnectTimeout = 12[default=5];
+  //以下信息是必填项
+  required string Endpoint = 13;
+  required string AccesKeyId = 14;
+  required string AccessKeySecret = 15;
+}
