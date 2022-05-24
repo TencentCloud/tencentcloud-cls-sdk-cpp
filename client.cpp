@@ -263,7 +263,7 @@ LOGClient::LOGClient(const string& clsHost, const string& accessKeyId, const str
     mMaxSendSpeedInBytePerSec = 1024 * 1024 * 1024;
 }
 
-LOGClient::~LOGClient() throw()
+LOGClient::~LOGClient()
 {
     pthread_mutex_destroy(&mMutexLock);
 }

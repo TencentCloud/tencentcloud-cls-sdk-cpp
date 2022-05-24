@@ -2,6 +2,12 @@
 
 namespace tencent_log_sdk_cpp_v2
 {
+#define LOG_GLOBAL_SSL (1<<0)
+#define LOG_GLOBAL_WIN32 (1<<1)
+#define LOG_GLOBAL_ALL (LOG_GLOBAL_SSL|LOG_GLOBAL_WIN32)
+#define LOG_GLOBAL_NOTHING (0)
+static uint32_t s_init_flag = 0;
+static int s_last_result = 0;
 ProducerClient::ProducerClient(cls_config::LogProducerConfig& config) : config_(config)
 {
     _ValidateProducerConfig();
@@ -11,10 +17,44 @@ ProducerClient::ProducerClient(cls_config::LogProducerConfig& config) : config_(
     accumuloter_ = std::make_shared<LogAccumulator>(threadpool_, logmgr_, this->config_);
     logtimer_ = std::make_shared<LogTimer>(accumuloter_, threadpool_, retryqueue_, this->config_);
 }
+
+int ProducerClient::_log_producer_env_init()
+{
+    if (s_init_flag == 1)
+    {
+        return s_last_result;
+    }
+    s_init_flag = 1;
+    CURLcode ecode;
+    if ((ecode = curl_global_init(LOG_GLOBAL_ALL)) != CURLE_OK)
+    {
+        s_last_result = 1;
+    }
+    else
+    {
+        s_last_result = 0;
+    }
+    return s_last_result;
+}
+
+void ProducerClient::_log_producer_env_destroy()
+{
+    if (s_init_flag == 0)
+    {
+        return;
+    }
+    s_init_flag = 0;
+    curl_global_cleanup();
+}
 PostLogStoreLogsResponse ProducerClient::PostLogStoreLogs(const std::string& topic, const cls::Log& log,
                                                           std::shared_ptr<CallBack> callback)
 {
     PostLogStoreLogsResponse ret;
+    ret.statusCode = _log_producer_env_init();
+    if(ret.statusCode != 0){
+        return ret;
+    }
+
     if (topic.empty())
     {
         ret.statusCode = ERR_CLS_SDK_PARAM_ERROR;
@@ -98,6 +138,7 @@ void ProducerClient::LogProducerEnvDestroy()
     logtimer_->LogTimerDestroy();
     threadpool_->LogThreadPoolDestroy();
     google::protobuf::ShutdownProtobufLibrary();
+    _log_producer_env_destroy();
 }
 
 void ProducerClient::_ValidateProducerConfig()

@@ -18,12 +18,21 @@ std::string hmac_sha1(const char *key, const void *data, size_t len) {
     unsigned char digest[EVP_MAX_MD_SIZE];
     unsigned digest_len;
     char c_hmacsha1[EVP_MAX_MD_SIZE*2+1];
+#if !defined(OPENSSL_VERSION_NUMBER) || OPENSSL_VERSION_NUMBER < 0x10100000L
     HMAC_CTX ctx;
     HMAC_CTX_init(&ctx);
     HMAC_Init_ex(&ctx, key, strlen(key), EVP_sha1(), NULL);
     HMAC_Update(&ctx, (unsigned char*)data, len);
     HMAC_Final(&ctx, digest, &digest_len);
     HMAC_CTX_cleanup(&ctx);
+#else
+    HMAC_CTX *ctx = HMAC_CTX_new();
+    HMAC_CTX_reset(ctx);
+    HMAC_Init_ex(ctx, key, strlen(key), EVP_sha1(), NULL);
+    HMAC_Update(ctx, (unsigned char *)data, len);
+    HMAC_Final(ctx, digest, &digest_len);
+    HMAC_CTX_free(ctx);
+#endif
     for (unsigned i = 0; i != digest_len; ++i) {
         sprintf(&c_hmacsha1[i*2], "%02x", (unsigned int)digest[i]);
     }

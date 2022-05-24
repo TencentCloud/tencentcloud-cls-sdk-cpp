@@ -21,7 +21,7 @@ public:
     void Fail(PostLogStoreLogsResponse result) override 
     { 
         std::cout << result.Printf() << std::endl; 
-        std::cout<<result.loggroup_.ShortDebugString().c_str()<<std::endl;
+        // std::cout<<result.loggroup_.ShortDebugString().c_str()<<std::endl;
     }
 };
 

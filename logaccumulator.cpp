@@ -127,7 +127,7 @@ ErrCode LogAccumulator::AddLogToProducerBatch(const std::string& topicId, const 
     return ret;
 }
 
-std::map<const std::string, std::shared_ptr<BatchLogGroup>> LogAccumulator::GetlogTopicData()
+std::unordered_map<std::string, std::shared_ptr<BatchLogGroup>> LogAccumulator::GetlogTopicData()
 {
     return logtopicdata_;
 }

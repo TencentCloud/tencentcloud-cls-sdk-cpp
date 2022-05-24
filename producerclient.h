@@ -27,6 +27,10 @@ private:
 
     void _ValidateProducerConfig();
 
+    int _log_producer_env_init();
+
+    void _log_producer_env_destroy();
+
 private:
     std::shared_ptr<ThreadPool> threadpool_;
     std::shared_ptr<LogAccumulator> accumuloter_;

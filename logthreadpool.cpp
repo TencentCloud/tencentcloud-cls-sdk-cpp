@@ -47,7 +47,7 @@ int ThreadPool::Start()
                                 batch->CallBackReult(ret);
                             }
                             else if(ret.statusCode == 413 || ret.statusCode == 404 ||
-                                    ret.statusCode == 401)
+                                    ret.statusCode == 401 || curl_errcode.count(ret.statusCode))
                             {
                                 _DoProcessCallback(ret,batch);
                             }

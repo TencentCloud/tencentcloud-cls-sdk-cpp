@@ -1,6 +1,6 @@
 # 描述
 
-tencent-log-sdk-cpp 是C++用户日志结构化上传的SDK，采用轻量的设计模式，简单易用可快速上手
+tencent-log-sdk-cpp 是C++用户日志结构化上传的SDK，采用轻量的设计模式，简单易用可快速上手.支持同步模式以及异步模式。具体参见如下的demo
 
 ## 如何使用
 
@@ -15,7 +15,11 @@ tencent-log-sdk-cpp 是C++用户日志结构化上传的SDK，采用轻量的设
 - `openssl` 签名的计算依赖openssl,这里建议使用[官网](https://www.openssl.org/source/) 提供的1.1.1版本，签名的方式参见[文档](https://cloud.tencent.com/document/product/614/12445)
 
 
-### 使用步骤
+
+### 异步模式
+
+
+#### 使用步骤
 
 - step1:cd到当前工程目录下面
 - step2:执行命令 cmake .
@@ -40,7 +44,7 @@ tencent-log-sdk-cpp 是C++用户日志结构化上传的SDK，采用轻量的设
 | MaxRetryBackoffMs  | Int64 | 重试的最大退避时间，默认为 50 秒。                           |
 
 
-#### 参见如下demo:  sample.cpp文件
+#### 异步demo:  sample.cpp文件
 
 - 登陆腾讯云控制台可查看对应的SecretId和SecretKey。链接：https://console.cloud.tencent.com/cam/capi
 
@@ -106,6 +110,65 @@ int main()
   ```
 
 - 执行./sample 运行生成的二进制程序包，可登陆[腾讯云平台](https://console.cloud.tencent.com/cls/search)查看日志是否上传成功
+
+### 同步模式
+
+#### 使用说明
+
+- step1:cd到当前工程目录下面
+- step2:执行命令 cmake .
+- step3:执行命令 make 以上命令执行完了之后，会在当前工程目录下面生成libclssdk.a、libclssdk.so以及相应的cls_log.pb.h和cls_log.pb.cc文件方便项目中使用
+- step3:执行命令 make install 进行安装
+
+#### 同步demo: syncsample.cpp 
+
+```c++
+#include "client.h"
+#include "common.h"
+#include "cls_logs.pb.h"
+#include <string>
+#include <iostream>
+#include <unistd.h>
+#include <memory>
+using namespace tencent_log_sdk_cpp_v2;
+using namespace std;
+int main(int argc,char ** argv)
+{
+    //eg:内网域名：ap-guangzhou.cls.tencentyun.com
+    //eg:外网域名：ap-guangzhou.cls.tencentcs.com
+    string endpoint = "ap-guangzhou.cls.tencentcs.com";
+    string accessKeyId = "";
+    string accessKey = "";
+    string topic = "";
+    std::shared_ptr<LOGClient> ptr= std::make_shared<LOGClient>(endpoint,accessKeyId,accessKey,LOG_REQUEST_TIMEOUT,LOG_CONNECT_TIMEOUT,"127.0.0.1",true);
+    cls::LogGroup loggroup;
+    auto log = loggroup.add_logs();
+    log->set_time(time(NULL));
+    auto content = log->add_contents();
+    content->set_key("content");
+    content->set_value("this my test log");
+    loggroup.set_source("127.0.0.1");
+    PostLogStoreLogsResponse ret;
+    try{
+        for(int i = 0; i < 10; ++i){
+            ret = ptr -> PostLogStoreLogs(topic,loggroup);
+            printf("%s\n",ret.Printf().c_str());
+        }
+    }
+    catch(LOGException & e)
+    {
+        cout<<e.GetErrorCode()<<":"<<e.GetMessage()<<endl;
+    }
+    return 0;
+}
+
+```
+
+- 编译
+
+```
+  g++ -o syncsample  syncsample.cpp -std=c++11  -O2  -L. -lclssdk -lcurl -lprotobuf -lssl -lcrypto -lboost_thread
+```
 
 ## FAQ
 
@@ -222,6 +285,3 @@ int main()
   ```
 
   
-
-
-

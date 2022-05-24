@@ -4,6 +4,7 @@
 #include <atomic>
 #include <boost/thread/shared_mutex.hpp>
 #include <map>
+#include <unordered_map>
 #include <string>
 
 #include "logthreadpool.h"
@@ -21,14 +22,14 @@ public:
     ~LogAccumulator();
     LogAccumulator(const LogAccumulator&) = delete;
     ErrCode AddLogToProducerBatch(const std::string& topicId, const cls::Log& log, std::shared_ptr<CallBack>& callback);
-    std::map<const std::string, std::shared_ptr<BatchLogGroup>> GetlogTopicData();
+    std::unordered_map<std::string, std::shared_ptr<BatchLogGroup>> GetlogTopicData();
     ErrCode CreateBatchLogGroup(const std::string& topicId, const cls::Log& log, std::shared_ptr<CallBack> &callback,
                     const int64_t logsize);
     ErrCode AddTask(const std::string& topicId, std::shared_ptr<BatchLogGroup> batch);
     void LogAccumulatorDestroy();
 
 private:
-    std::map<const std::string, std::shared_ptr<BatchLogGroup>> logtopicdata_;
+    std::unordered_map<std::string, std::shared_ptr<BatchLogGroup>> logtopicdata_;
     const cls_config::LogProducerConfig& config_;
     std::atomic_bool shutdownflag_;
     std::shared_ptr<ThreadPool> threadpool_;

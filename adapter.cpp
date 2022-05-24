@@ -244,6 +244,11 @@ void LOGAdapter::Send(const string& httpMethod, const string& host, const int32_
         {
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         }
+        curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
+        /* keep-alive idle time to 120 seconds */
+        curl_easy_setopt(curl, CURLOPT_TCP_KEEPIDLE, 120L);
+        /* interval time between keep-alive probes: 60 seconds */
+        curl_easy_setopt(curl, CURLOPT_TCP_KEEPINTVL, 60L);
         curl_easy_setopt(curl, CURLOPT_URL, queryUrl.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, data_write_callback);
@@ -286,24 +291,25 @@ void LOGAdapter::Send(const string& httpMethod, const string& host, const int32_
                 break;
             case CURLE_OPERATION_TIMEDOUT:
                 CURL_CLEAN_UP
-                throw LOGException(LOGE_REQUEST_TIMEOUT, "Request operation timeout.");
+                statusCode = CURLE_OPERATION_TIMEDOUT;
+                response = "Request operation timeout.";
                 break;
             case CURLE_COULDNT_CONNECT:
                 CURL_CLEAN_UP
-                throw LOGException(LOGE_CLIENT_NETWORK_ERROR, "Can not connect to server.");
+                statusCode = CURLE_COULDNT_CONNECT;
+                response = "Can not connect to server.";
                 break;
             default:
                 CURL_CLEAN_UP
-                throw LOGException(LOGE_CLIENT_NETWORK_ERROR,
-                                   std::string("Request operation failed.") + "CURL_ERROR_CODE:" + ToString(res));
+                statusCode = res;
+                response = "Request operation failed.";
                 break;
         }
     }
     else
     {
-        throw LOGException(LOGE_UNKNOWN_ERROR, "Initailizing request failed.");
+         LOGException(LOGE_UNKNOWN_ERROR, "Initailizing request failed.");
     }
-
     httpMessage = HttpMessage(statusCode, responseHeader, response);
 }
 } // namespace tencent_log_sdk_cpp_v2

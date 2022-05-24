@@ -9,7 +9,8 @@ namespace tencent_log_sdk_cpp_v2
 {
 extern const char * const DATE_FORMAT_RFC822;// "%a, %d %b %Y %H:%M:%S GMT" ///<RFC822 date formate, GMT time.
 //typedef enum {REQUEST_GET= 1, REQUEST_POST } LOG_Request_Mode;///<Http Request Method.
-const uint32_t LOG_REQUEST_TIMEOUT = 20; //second
+const uint32_t LOG_REQUEST_TIMEOUT = 30; //second
+const uint32_t LOG_CONNECT_TIMEOUT = 5; //second
 
 extern const char* const LOGE_REQUEST_ERROR;//= "RequestError";
 extern const char* const LOGE_INVALID_HOST;//= "InvalidHost"
