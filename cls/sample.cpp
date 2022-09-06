@@ -1,13 +1,13 @@
 
-#include "producerclient.h"
-#include "common.h"
-#include "cls_logs.pb.h"
-#include "logproducerconfig.pb.h"
+#include "cls/producerclient.h"
+#include "cls/common.h"
+#include "cls/cls_logs.pb.h"
+#include "cls/logproducerconfig.pb.h"
 #include <string>
 #include <iostream>
 #include <unistd.h>
-#include "result.h"
-#include "error.h"
+#include "cls/result.h"
+#include "cls/error.h"
 using namespace tencent_log_sdk_cpp_v2;
 using namespace std;
 

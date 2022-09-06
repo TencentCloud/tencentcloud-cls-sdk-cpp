@@ -1,7 +1,7 @@
 
-#include "client.h"
-#include "common.h"
-#include "cls_logs.pb.h"
+#include "cls/client.h"
+#include "cls/common.h"
+#include "cls/cls_logs.pb.h"
 #include <string>
 #include <iostream>
 #include <unistd.h>

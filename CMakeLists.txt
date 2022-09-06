@@ -5,23 +5,24 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations
 find_package(Protobuf REQUIRED)
 
 include_directories(${PROTOBUF_INCLUDE_DIRS})
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS cls_logs.proto logproducerconfig.proto)
+protobuf_generate_cpp(PROTO_SRCS cls/PROTO_HDRS cls/cls_logs.proto cls/logproducerconfig.proto)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SRC_LISTS
-    client.cpp
-    adapter.cpp
-    common.cpp
+    cls/client.cpp
+    cls/adapter.cpp
+    cls/common.cpp
     lz4/lz4.c
-    signature.cpp
-    logthreadpool.cpp
-    batchloggroup.cpp
-    logaccumulator.cpp
-    logtimer.cpp
-    utils.cpp
-    producerclient.cpp
-    result.h
-    logmemmgr.cpp
-    logretryqueue.cpp
+    cls/signature.cpp
+    cls/logthreadpool.cpp
+    cls/batchloggroup.cpp
+    cls/logaccumulator.cpp
+    cls/logtimer.cpp
+    cls/utils.cpp
+    cls/producerclient.cpp
+    cls/result.h
+    cls/logmemmgr.cpp
+    cls/logretryqueue.cpp
     ${PROTO_SRCS}
 )
 add_library(clssdk_static
@@ -39,11 +40,12 @@ install(TARGETS clssdk_static clssdk_shared
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
 
-install(FILES client.h RestfulApiCommon.h common.h 
-    producerclient.h result.h common.h logthreadpool.h 
-    batchloggroup.h logmemmgr.h logaccumulator.h logtimer.h
-    logretryqueue.h logthreadpool.h error.h ${PROTO_HDRS}
-    DESTINATION include)
+
+install(FILES cls/client.h cls/RestfulApiCommon.h cls/common.h 
+    cls/producerclient.h cls/result.h cls/common.h cls/logthreadpool.h 
+    cls/batchloggroup.h cls/logmemmgr.h cls/logaccumulator.h cls/logtimer.h
+    cls/logretryqueue.h cls/logthreadpool.h cls/error.h ${PROTO_HDRS}
+    DESTINATION include/cls)
 
 install(DIRECTORY rapidjson
     DESTINATION include)
