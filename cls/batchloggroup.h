@@ -11,6 +11,7 @@
 #include <boost/thread/shared_mutex.hpp>
 #include <thread>
 #include "error.h"
+#include <atomic>
 namespace tencent_log_sdk_cpp_v2
 {
 
