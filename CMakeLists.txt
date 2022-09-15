@@ -5,7 +5,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations
 find_package(Protobuf REQUIRED)
 
 include_directories(${PROTOBUF_INCLUDE_DIRS})
-protobuf_generate_cpp(PROTO_SRCS cls/PROTO_HDRS cls/cls_logs.proto cls/logproducerconfig.proto)
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS cls_logs.proto logproducerconfig.proto)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SRC_LISTS
