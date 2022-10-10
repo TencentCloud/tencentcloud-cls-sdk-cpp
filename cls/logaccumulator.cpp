@@ -5,8 +5,9 @@
 #include <atomic>
 #include <list>
 #include <string>
-#include <boost/thread/shared_mutex.hpp>
+#include "util/thread_rwlock.h"
 #include "logretryqueue.h"
+
 namespace tencent_log_sdk_cpp_v2
 {
 LogAccumulator::LogAccumulator(std::shared_ptr<ThreadPool>& threadpool, std::shared_ptr<LogMemMgr>& mgr,
@@ -49,7 +50,7 @@ ErrCode LogAccumulator::AddLogToProducerBatch(const std::string& topicId, const 
     {
         return ErrCode{ERR_CLS_SDK_TASK_SHUTDOWN, "task has shutdownflag_ and cannot write to new logs"};
     }
-    std::unique_lock<boost::shared_mutex> lock(mutex_);
+    ThreadWLock lock(mutex_);
     int64_t logsize = 0;
     ErrCode ret = GetLogContentSize(log,logsize);
     if (ret.retCode != 0)

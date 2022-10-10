@@ -23,6 +23,7 @@ private:
     std::atomic_bool shutdownflag_;
     std::shared_ptr<LogAccumulator> logaccumulator_;
     std::shared_ptr<ThreadPool> threadpool_;
+    mutable ThreadRWLocker mutex_;
 
     std::thread td_;
 

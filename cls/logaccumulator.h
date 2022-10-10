@@ -2,7 +2,7 @@
 #define __LOGV6_LOGACCUMULATOR_H__
 
 #include <atomic>
-#include <boost/thread/shared_mutex.hpp>
+#include "util/thread_rwlock.h"
 #include <map>
 #include <unordered_map>
 #include <string>
@@ -16,7 +16,7 @@ namespace tencent_log_sdk_cpp_v2
 class LogAccumulator
 {
 public:
-    mutable boost::shared_mutex mutex_;
+    mutable ThreadRWLocker mutex_;
     LogAccumulator(std::shared_ptr<ThreadPool>& threadpool, std::shared_ptr<LogMemMgr>& mgr,
                    const cls_config::LogProducerConfig& config);
     ~LogAccumulator();
