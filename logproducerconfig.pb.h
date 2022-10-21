@@ -179,10 +179,22 @@ class LogProducerConfig : public ::google::protobuf::Message {
   inline ::google::protobuf::uint64 connecttimeout() const;
   inline void set_connecttimeout(::google::protobuf::uint64 value);
 
-  // required string Endpoint = 13;
+  // optional string token = 13;
+  inline bool has_token() const;
+  inline void clear_token();
+  static const int kTokenFieldNumber = 13;
+  inline const ::std::string& token() const;
+  inline void set_token(const ::std::string& value);
+  inline void set_token(const char* value);
+  inline void set_token(const char* value, size_t size);
+  inline ::std::string* mutable_token();
+  inline ::std::string* release_token();
+  inline void set_allocated_token(::std::string* token);
+
+  // required string Endpoint = 14;
   inline bool has_endpoint() const;
   inline void clear_endpoint();
-  static const int kEndpointFieldNumber = 13;
+  static const int kEndpointFieldNumber = 14;
   inline const ::std::string& endpoint() const;
   inline void set_endpoint(const ::std::string& value);
   inline void set_endpoint(const char* value);
@@ -191,10 +203,10 @@ class LogProducerConfig : public ::google::protobuf::Message {
   inline ::std::string* release_endpoint();
   inline void set_allocated_endpoint(::std::string* endpoint);
 
-  // required string AccesKeyId = 14;
+  // required string AccesKeyId = 15;
   inline bool has_acceskeyid() const;
   inline void clear_acceskeyid();
-  static const int kAccesKeyIdFieldNumber = 14;
+  static const int kAccesKeyIdFieldNumber = 15;
   inline const ::std::string& acceskeyid() const;
   inline void set_acceskeyid(const ::std::string& value);
   inline void set_acceskeyid(const char* value);
@@ -203,10 +215,10 @@ class LogProducerConfig : public ::google::protobuf::Message {
   inline ::std::string* release_acceskeyid();
   inline void set_allocated_acceskeyid(::std::string* acceskeyid);
 
-  // required string AccessKeySecret = 15;
+  // required string AccessKeySecret = 16;
   inline bool has_accesskeysecret() const;
   inline void clear_accesskeysecret();
-  static const int kAccessKeySecretFieldNumber = 15;
+  static const int kAccessKeySecretFieldNumber = 16;
   inline const ::std::string& accesskeysecret() const;
   inline void set_accesskeysecret(const ::std::string& value);
   inline void set_accesskeysecret(const char* value);
@@ -241,6 +253,8 @@ class LogProducerConfig : public ::google::protobuf::Message {
   inline void clear_has_socktimeout();
   inline void set_has_connecttimeout();
   inline void clear_has_connecttimeout();
+  inline void set_has_token();
+  inline void clear_has_token();
   inline void set_has_endpoint();
   inline void clear_has_endpoint();
   inline void set_has_acceskeyid();
@@ -263,6 +277,7 @@ class LogProducerConfig : public ::google::protobuf::Message {
   ::std::string* source_;
   ::google::protobuf::uint64 socktimeout_;
   ::google::protobuf::uint64 connecttimeout_;
+  ::std::string* token_;
   ::std::string* endpoint_;
   ::std::string* acceskeyid_;
   ::std::string* accesskeysecret_;
@@ -621,15 +636,91 @@ inline void LogProducerConfig::set_connecttimeout(::google::protobuf::uint64 val
   // @@protoc_insertion_point(field_set:cls_config.LogProducerConfig.ConnectTimeout)
 }
 
-// required string Endpoint = 13;
-inline bool LogProducerConfig::has_endpoint() const {
+// optional string token = 13;
+inline bool LogProducerConfig::has_token() const {
   return (_has_bits_[0] & 0x00001000u) != 0;
 }
-inline void LogProducerConfig::set_has_endpoint() {
+inline void LogProducerConfig::set_has_token() {
   _has_bits_[0] |= 0x00001000u;
 }
-inline void LogProducerConfig::clear_has_endpoint() {
+inline void LogProducerConfig::clear_has_token() {
   _has_bits_[0] &= ~0x00001000u;
+}
+inline void LogProducerConfig::clear_token() {
+  if (token_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    token_->clear();
+  }
+  clear_has_token();
+}
+inline const ::std::string& LogProducerConfig::token() const {
+  // @@protoc_insertion_point(field_get:cls_config.LogProducerConfig.token)
+  return *token_;
+}
+inline void LogProducerConfig::set_token(const ::std::string& value) {
+  set_has_token();
+  if (token_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    token_ = new ::std::string;
+  }
+  token_->assign(value);
+  // @@protoc_insertion_point(field_set:cls_config.LogProducerConfig.token)
+}
+inline void LogProducerConfig::set_token(const char* value) {
+  set_has_token();
+  if (token_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    token_ = new ::std::string;
+  }
+  token_->assign(value);
+  // @@protoc_insertion_point(field_set_char:cls_config.LogProducerConfig.token)
+}
+inline void LogProducerConfig::set_token(const char* value, size_t size) {
+  set_has_token();
+  if (token_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    token_ = new ::std::string;
+  }
+  token_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:cls_config.LogProducerConfig.token)
+}
+inline ::std::string* LogProducerConfig::mutable_token() {
+  set_has_token();
+  if (token_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    token_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:cls_config.LogProducerConfig.token)
+  return token_;
+}
+inline ::std::string* LogProducerConfig::release_token() {
+  clear_has_token();
+  if (token_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = token_;
+    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void LogProducerConfig::set_allocated_token(::std::string* token) {
+  if (token_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete token_;
+  }
+  if (token) {
+    set_has_token();
+    token_ = token;
+  } else {
+    clear_has_token();
+    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:cls_config.LogProducerConfig.token)
+}
+
+// required string Endpoint = 14;
+inline bool LogProducerConfig::has_endpoint() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void LogProducerConfig::set_has_endpoint() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void LogProducerConfig::clear_has_endpoint() {
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline void LogProducerConfig::clear_endpoint() {
   if (endpoint_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -697,15 +788,15 @@ inline void LogProducerConfig::set_allocated_endpoint(::std::string* endpoint) {
   // @@protoc_insertion_point(field_set_allocated:cls_config.LogProducerConfig.Endpoint)
 }
 
-// required string AccesKeyId = 14;
+// required string AccesKeyId = 15;
 inline bool LogProducerConfig::has_acceskeyid() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00004000u) != 0;
 }
 inline void LogProducerConfig::set_has_acceskeyid() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00004000u;
 }
 inline void LogProducerConfig::clear_has_acceskeyid() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00004000u;
 }
 inline void LogProducerConfig::clear_acceskeyid() {
   if (acceskeyid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -773,15 +864,15 @@ inline void LogProducerConfig::set_allocated_acceskeyid(::std::string* acceskeyi
   // @@protoc_insertion_point(field_set_allocated:cls_config.LogProducerConfig.AccesKeyId)
 }
 
-// required string AccessKeySecret = 15;
+// required string AccessKeySecret = 16;
 inline bool LogProducerConfig::has_accesskeysecret() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
+  return (_has_bits_[0] & 0x00008000u) != 0;
 }
 inline void LogProducerConfig::set_has_accesskeysecret() {
-  _has_bits_[0] |= 0x00004000u;
+  _has_bits_[0] |= 0x00008000u;
 }
 inline void LogProducerConfig::clear_has_accesskeysecret() {
-  _has_bits_[0] &= ~0x00004000u;
+  _has_bits_[0] &= ~0x00008000u;
 }
 inline void LogProducerConfig::clear_accesskeysecret() {
   if (accesskeysecret_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {

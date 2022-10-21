@@ -34,7 +34,7 @@ void protobuf_AssignDesc_logproducerconfig_2eproto() {
       "logproducerconfig.proto");
   GOOGLE_CHECK(file != NULL);
   LogProducerConfig_descriptor_ = file->message_type(0);
-  static const int LogProducerConfig_offsets_[15] = {
+  static const int LogProducerConfig_offsets_[16] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, totalsizelnbytes_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, maxsendworkercount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, maxblocksec_),
@@ -47,6 +47,7 @@ void protobuf_AssignDesc_logproducerconfig_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, source_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, socktimeout_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, connecttimeout_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, token_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, endpoint_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, acceskeyid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LogProducerConfig, accesskeysecret_),
@@ -92,7 +93,7 @@ void protobuf_AddDesc_logproducerconfig_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\027logproducerconfig.proto\022\ncls_config\"\236\003"
+    "\n\027logproducerconfig.proto\022\ncls_config\"\255\003"
     "\n\021LogProducerConfig\022#\n\020TotalSizeLnBytes\030"
     "\001 \001(\004:\t104857600\022\036\n\022MaxSendWorkerCount\030\002"
     " \001(\004:\00250\022\027\n\013MaxBlockSec\030\003 \001(\004:\00260\022\034\n\014Max"
@@ -101,9 +102,9 @@ void protobuf_AddDesc_logproducerconfig_2eproto() {
     "yBackoffMs\030\007 \001(\004:\003100\022 \n\021MaxRetryBackoff"
     "Ms\030\010 \001(\004:\00550000\022\032\n\014compressflag\030\t \001(\010:\004t"
     "rue\022\016\n\006source\030\n \001(\t\022\027\n\013SockTimeout\030\013 \001(\004"
-    ":\00230\022\031\n\016ConnectTimeout\030\014 \001(\004:\0015\022\020\n\010Endpo"
-    "int\030\r \002(\t\022\022\n\nAccesKeyId\030\016 \002(\t\022\027\n\017AccessK"
-    "eySecret\030\017 \002(\t", 454);
+    ":\00230\022\031\n\016ConnectTimeout\030\014 \001(\004:\0015\022\r\n\005token"
+    "\030\r \001(\t\022\020\n\010Endpoint\030\016 \002(\t\022\022\n\nAccesKeyId\030\017"
+    " \002(\t\022\027\n\017AccessKeySecret\030\020 \002(\t", 469);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "logproducerconfig.proto", &protobuf_RegisterTypes);
   LogProducerConfig::default_instance_ = new LogProducerConfig();
@@ -133,6 +134,7 @@ const int LogProducerConfig::kCompressflagFieldNumber;
 const int LogProducerConfig::kSourceFieldNumber;
 const int LogProducerConfig::kSockTimeoutFieldNumber;
 const int LogProducerConfig::kConnectTimeoutFieldNumber;
+const int LogProducerConfig::kTokenFieldNumber;
 const int LogProducerConfig::kEndpointFieldNumber;
 const int LogProducerConfig::kAccesKeyIdFieldNumber;
 const int LogProducerConfig::kAccessKeySecretFieldNumber;
@@ -169,6 +171,7 @@ void LogProducerConfig::SharedCtor() {
   source_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   socktimeout_ = GOOGLE_ULONGLONG(30);
   connecttimeout_ = GOOGLE_ULONGLONG(5);
+  token_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   endpoint_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   acceskeyid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   accesskeysecret_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -183,6 +186,9 @@ LogProducerConfig::~LogProducerConfig() {
 void LogProducerConfig::SharedDtor() {
   if (source_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete source_;
+  }
+  if (token_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete token_;
   }
   if (endpoint_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete endpoint_;
@@ -229,7 +235,7 @@ void LogProducerConfig::Clear() {
     baseretrybackoffms_ = GOOGLE_ULONGLONG(100);
     maxretrybackoffms_ = GOOGLE_ULONGLONG(50000);
   }
-  if (_has_bits_[8 / 32] & 32512) {
+  if (_has_bits_[8 / 32] & 65280) {
     compressflag_ = true;
     if (has_source()) {
       if (source_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -238,6 +244,11 @@ void LogProducerConfig::Clear() {
     }
     socktimeout_ = GOOGLE_ULONGLONG(30);
     connecttimeout_ = GOOGLE_ULONGLONG(5);
+    if (has_token()) {
+      if (token_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        token_->clear();
+      }
+    }
     if (has_endpoint()) {
       if (endpoint_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         endpoint_->clear();
@@ -264,7 +275,7 @@ bool LogProducerConfig::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:cls_config.LogProducerConfig)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -445,13 +456,30 @@ bool LogProducerConfig::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(106)) goto parse_Endpoint;
+        if (input->ExpectTag(106)) goto parse_token;
         break;
       }
 
-      // required string Endpoint = 13;
+      // optional string token = 13;
       case 13: {
         if (tag == 106) {
+         parse_token:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_token()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->token().data(), this->token().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "token");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(114)) goto parse_Endpoint;
+        break;
+      }
+
+      // required string Endpoint = 14;
+      case 14: {
+        if (tag == 114) {
          parse_Endpoint:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_endpoint()));
@@ -462,13 +490,13 @@ bool LogProducerConfig::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(114)) goto parse_AccesKeyId;
+        if (input->ExpectTag(122)) goto parse_AccesKeyId;
         break;
       }
 
-      // required string AccesKeyId = 14;
-      case 14: {
-        if (tag == 114) {
+      // required string AccesKeyId = 15;
+      case 15: {
+        if (tag == 122) {
          parse_AccesKeyId:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_acceskeyid()));
@@ -479,13 +507,13 @@ bool LogProducerConfig::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(122)) goto parse_AccessKeySecret;
+        if (input->ExpectTag(130)) goto parse_AccessKeySecret;
         break;
       }
 
-      // required string AccessKeySecret = 15;
-      case 15: {
-        if (tag == 122) {
+      // required string AccessKeySecret = 16;
+      case 16: {
+        if (tag == 130) {
          parse_AccessKeySecret:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_accesskeysecret()));
@@ -590,34 +618,44 @@ void LogProducerConfig::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(12, this->connecttimeout(), output);
   }
 
-  // required string Endpoint = 13;
+  // optional string token = 13;
+  if (has_token()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->token().data(), this->token().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "token");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      13, this->token(), output);
+  }
+
+  // required string Endpoint = 14;
   if (has_endpoint()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->endpoint().data(), this->endpoint().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "endpoint");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      13, this->endpoint(), output);
+      14, this->endpoint(), output);
   }
 
-  // required string AccesKeyId = 14;
+  // required string AccesKeyId = 15;
   if (has_acceskeyid()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->acceskeyid().data(), this->acceskeyid().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "acceskeyid");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      14, this->acceskeyid(), output);
+      15, this->acceskeyid(), output);
   }
 
-  // required string AccessKeySecret = 15;
+  // required string AccessKeySecret = 16;
   if (has_accesskeysecret()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->accesskeysecret().data(), this->accesskeysecret().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "accesskeysecret");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      15, this->accesskeysecret(), output);
+      16, this->accesskeysecret(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -696,7 +734,18 @@ void LogProducerConfig::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(12, this->connecttimeout(), target);
   }
 
-  // required string Endpoint = 13;
+  // optional string token = 13;
+  if (has_token()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->token().data(), this->token().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "token");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        13, this->token(), target);
+  }
+
+  // required string Endpoint = 14;
   if (has_endpoint()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->endpoint().data(), this->endpoint().length(),
@@ -704,10 +753,10 @@ void LogProducerConfig::SerializeWithCachedSizes(
       "endpoint");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        13, this->endpoint(), target);
+        14, this->endpoint(), target);
   }
 
-  // required string AccesKeyId = 14;
+  // required string AccesKeyId = 15;
   if (has_acceskeyid()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->acceskeyid().data(), this->acceskeyid().length(),
@@ -715,10 +764,10 @@ void LogProducerConfig::SerializeWithCachedSizes(
       "acceskeyid");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        14, this->acceskeyid(), target);
+        15, this->acceskeyid(), target);
   }
 
-  // required string AccessKeySecret = 15;
+  // required string AccessKeySecret = 16;
   if (has_accesskeysecret()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->accesskeysecret().data(), this->accesskeysecret().length(),
@@ -726,7 +775,7 @@ void LogProducerConfig::SerializeWithCachedSizes(
       "accesskeysecret");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        15, this->accesskeysecret(), target);
+        16, this->accesskeysecret(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -825,23 +874,30 @@ int LogProducerConfig::ByteSize() const {
           this->connecttimeout());
     }
 
-    // required string Endpoint = 13;
+    // optional string token = 13;
+    if (has_token()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->token());
+    }
+
+    // required string Endpoint = 14;
     if (has_endpoint()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->endpoint());
     }
 
-    // required string AccesKeyId = 14;
+    // required string AccesKeyId = 15;
     if (has_acceskeyid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->acceskeyid());
     }
 
-    // required string AccessKeySecret = 15;
+    // required string AccessKeySecret = 16;
     if (has_accesskeysecret()) {
-      total_size += 1 +
+      total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->accesskeysecret());
     }
@@ -911,6 +967,9 @@ void LogProducerConfig::MergeFrom(const LogProducerConfig& from) {
     if (from.has_connecttimeout()) {
       set_connecttimeout(from.connecttimeout());
     }
+    if (from.has_token()) {
+      set_token(from.token());
+    }
     if (from.has_endpoint()) {
       set_endpoint(from.endpoint());
     }
@@ -937,7 +996,7 @@ void LogProducerConfig::CopyFrom(const LogProducerConfig& from) {
 }
 
 bool LogProducerConfig::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00007000) != 0x00007000) return false;
+  if ((_has_bits_[0] & 0x0000e000) != 0x0000e000) return false;
 
   return true;
 }
@@ -956,6 +1015,7 @@ void LogProducerConfig::Swap(LogProducerConfig* other) {
     std::swap(source_, other->source_);
     std::swap(socktimeout_, other->socktimeout_);
     std::swap(connecttimeout_, other->connecttimeout_);
+    std::swap(token_, other->token_);
     std::swap(endpoint_, other->endpoint_);
     std::swap(acceskeyid_, other->acceskeyid_);
     std::swap(accesskeysecret_, other->accesskeysecret_);

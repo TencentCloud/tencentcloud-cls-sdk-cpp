@@ -12,7 +12,7 @@ ThreadPool::ThreadPool(std::shared_ptr<LogMemMgr>& mgr, std::shared_ptr<LogRetry
     : shutdownflag_(false), logmgr_(mgr), retryqueue_(retryqueue), config_(config)
 {
     logclient_ = std::make_shared<LOGClient>(config_.endpoint(), config_.acceskeyid(), config_.accesskeysecret(),
-                                             config.socktimeout(), config.connecttimeout(), config_.source(),
+                                             config.socktimeout(), config.connecttimeout(),config_.token(),config_.source(),
                                              config_.compressflag());
 }
 

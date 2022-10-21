@@ -242,10 +242,10 @@ static void ErrorCheck(const string& response, const string& requestId, const in
 }
 
 
-LOGClient::LOGClient(const string& clsHost, const string& accessKeyId, const string& accessKey, int64_t timeout,
-                     int64_t connecttimeout, const string& source, bool compressFlag)
+LOGClient::LOGClient(const std::string& clsHost, const std::string& accessKeyId, const std::string& accessKey, int64_t timeout,
+              int64_t connecttimeout,const std::string& token,const std::string& source, bool compressFlag)
     : mClsHost(clsHost), mAccessKeyId(accessKeyId), mAccessKey(accessKey), mSource(source), mCompressFlag(compressFlag),
-      mTimeout(timeout), mConnectTimeout(connecttimeout), mUserAgent(LOG_SDK_IDENTIFICATION),
+      mTimeout(timeout), mConnectTimeout(connecttimeout), mSecurityToken(token),mUserAgent(LOG_SDK_IDENTIFICATION),
       mGetDateString(CodecTool::GetDateString), mLOGSend(LOGAdapter::Send)
 {
     pthread_mutex_init(&mMutexLock, NULL);
@@ -312,6 +312,9 @@ void LOGClient::SendRequest(const string& httpMethod, const string& url, const s
     SetCommonHeader(header, body.length());
     std::string sign = signature(mAccessKeyId, mAccessKey, httpMethod, url, parameterList, header, 300);
     header[AUTHORIZATION] = sign;
+    if (!mSecurityToken.empty()){
+        header[CLS_TOKEN] = mSecurityToken;
+    }
 
     string queryString;
     LOGAdapter::GetQueryString(parameterList, queryString);
