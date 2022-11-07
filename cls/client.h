@@ -70,7 +70,7 @@ class LOGClient
 {
 public:
     LOGClient(const std::string& clsHost, const std::string& accessKeyId, const std::string& accessKey, int64_t timeout,
-              int64_t connecttimeout, const std::string& source = "", bool compressFlag = true);
+              int64_t connecttimeout, const std::string& token = "",const std::string& source = "", bool compressFlag = true);
     ~LOGClient() throw();
 
     PostLogStoreLogsResponse PostLogStoreLogs(const std::string& topic, const cls::LogGroup& loggroup_);

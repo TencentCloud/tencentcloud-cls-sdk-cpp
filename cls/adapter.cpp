@@ -72,6 +72,7 @@ extern const char* const CONTENT_MD5 = "Content-MD5";
 extern const char* const AUTHORIZATION = "Authorization";
 extern const char* const SIGNATURE = "Signature";
 extern const char* const ACCEPT_ENCODING = "Accept-Encoding";
+extern const char* const CLS_TOKEN = "X-Cls-Token";
 extern const char* const ENCONDING_GZIP = "gzip";
 extern const char* const TYPE_LOG_PROTOBUF = "application/x-protobuf";
 extern const char* const TYPE_LOG_JSON = "application/json";
