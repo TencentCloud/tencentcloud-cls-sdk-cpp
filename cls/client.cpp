@@ -312,6 +312,7 @@ void LOGClient::SendRequest(const string& httpMethod, const string& url, const s
     SetCommonHeader(header, body.length());
     std::string sign = signature(mAccessKeyId, mAccessKey, httpMethod, url, parameterList, header, 300);
     header[AUTHORIZATION] = sign;
+    std::cout<<"sign:"<<sign<<std::endl;
     if (!mSecurityToken.empty()){
         header[CLS_TOKEN] = mSecurityToken;
     }

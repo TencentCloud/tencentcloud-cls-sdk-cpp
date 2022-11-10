@@ -1,4 +1,5 @@
 #include "signature.h"
+#include <iostream>
 
 namespace tencent_log_sdk_cpp_v2{
 std::string sha1(const void *data, size_t len) {
@@ -105,8 +106,11 @@ std::string signature(const std::string &secret_id,
     }
     //printf("%s\nEOF\n", http_request_info.c_str());
     char signed_time[SIGNLEN];
+    memset(signed_time,0,SIGNLEN);
+    int64_t nowTime = time(0);
     int signed_time_len = snprintf(signed_time, SIGNLEN,
-        "%lu;%lu", time(0) - 60, time(0) + expire);
+        "%lu;%lu", nowTime - 60, nowTime + expire);
+    std::cout<<"signed_time:"<<signed_time<<"|nowTime:"<<nowTime<<std::endl;
     //snprintf(signed_time, SIGNLEN, "1510109254;1510109314");
     std::string signkey = hmac_sha1(secret_key.c_str(),
         signed_time, signed_time_len);
