@@ -110,7 +110,7 @@ std::string signature(const std::string &secret_id,
     int64_t nowTime = time(0);
     int signed_time_len = snprintf(signed_time, SIGNLEN,
         "%lu;%lu", nowTime - 60, nowTime + expire);
-    std::cout<<"signed_time:"<<signed_time<<"|nowTime:"<<nowTime<<std::endl;
+    std::cout<<"signed_time:"<<signed_time<<"|nowTime:"<<nowTime<<"|expire:"<<expire<<std::endl;
     //snprintf(signed_time, SIGNLEN, "1510109254;1510109314");
     std::string signkey = hmac_sha1(secret_key.c_str(),
         signed_time, signed_time_len);
