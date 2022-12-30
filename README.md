@@ -140,7 +140,8 @@ int main(int argc,char ** argv)
     string accessKeyId = "";
     string accessKey = "";
     string topic = "";
-    std::shared_ptr<LOGClient> ptr= std::make_shared<LOGClient>(endpoint,accessKeyId,accessKey,LOG_REQUEST_TIMEOUT,LOG_CONNECT_TIMEOUT,"127.0.0.1",true);
+    string token = "";
+    std::shared_ptr<LOGClient> ptr= std::make_shared<LOGClient>(endpoint,accessKeyId,accessKey,LOG_REQUEST_TIMEOUT,LOG_CONNECT_TIMEOUT,token,"127.0.0.1",true);
     cls::LogGroup loggroup;
     auto log = loggroup.add_logs();
     log->set_time(time(NULL));
