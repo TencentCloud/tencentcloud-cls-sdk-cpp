@@ -11,7 +11,7 @@ namespace tencent_log_sdk_cpp_v2
 {
 LogAccumulator::LogAccumulator(std::shared_ptr<ThreadPool>& threadpool, std::shared_ptr<LogMemMgr>& mgr,
                                const cls_config::LogProducerConfig& config)
-    : threadpool_(threadpool), logmgr_(mgr), config_(config)
+    : threadpool_(threadpool), logmgr_(mgr), config_(config), shutdownflag_(false)
 {
 }
 
