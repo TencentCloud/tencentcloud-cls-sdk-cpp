@@ -1,11 +1,9 @@
-
-
 #include "logretryqueue.h"
 #include "utils.h"
+#include "util/thread_rwlock.h"
 
 namespace tencent_log_sdk_cpp_v2
 {
-
 LogRetryQueue::LogRetryQueue() : shutdownflag_(false) {}
 ErrCode LogRetryQueue::SendToRetryQueue(std::shared_ptr<BatchLogGroup>& batch)
 {
@@ -16,7 +14,7 @@ ErrCode LogRetryQueue::SendToRetryQueue(std::shared_ptr<BatchLogGroup>& batch)
 
     if (batch != NULL)
     {
-        boost::unique_lock<boost::shared_mutex> lock(mutex_);
+        ThreadWLock lock(mutex_);
         retrybatchqueue_.push(batch);
     }
 
@@ -25,7 +23,7 @@ ErrCode LogRetryQueue::SendToRetryQueue(std::shared_ptr<BatchLogGroup>& batch)
 
 std::vector<std::shared_ptr<BatchLogGroup>> LogRetryQueue::GetRetryBatch()
 {
-    boost::unique_lock<boost::shared_mutex> lock(mutex_);
+    ThreadWLock lock(mutex_);
     std::vector<std::shared_ptr<BatchLogGroup>> vecBatch;
     if (shutdownflag_)
     {

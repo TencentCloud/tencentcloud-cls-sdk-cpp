@@ -1,5 +1,6 @@
 #include "batchloggroup.h"
 #include "utils.h"
+#include "util/thread_rwlock.h"
 
 namespace tencent_log_sdk_cpp_v2
 {
@@ -25,7 +26,7 @@ std::string BatchLogGroup::getTopicID()
 
 ErrCode BatchLogGroup::AddLogToLogGroup(const cls::Log& log)
 {
-    std::unique_lock<boost::shared_mutex> lock(mutex_);
+    ThreadWLock lock(mutex_);
     auto logs = loggroup_.add_logs();
     logs->CopyFrom(log);
     return ErrCode{};
@@ -56,7 +57,7 @@ std::string BatchLogGroup::DebugString()
 
 cls::LogGroup BatchLogGroup::GetLogGroup()
 {
-    boost::shared_lock<boost::shared_mutex> lock(mutex_);
+    ThreadRLock lock(mutex_);
     return loggroup_;
 }
 
