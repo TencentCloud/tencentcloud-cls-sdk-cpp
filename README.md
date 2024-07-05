@@ -7,11 +7,9 @@ tencent-log-sdk-cpp 是C++用户日志结构化上传的SDK，采用轻量的设
 ### 依赖
 
 - `protobuf` require version protobuf 2.6.1
-
   - PB 描述文件是通信双方约定的数据交换格式，上传日志时须将规定的协议格式编译成对应语言版本的调用接口，然后添加到工程代码里。参见[文档](https://cloud.tencent.com/document/product/614/16873)
 - curl 可使用系统自带的工具或者自己安装即可
 - boost 依赖boot库
-  - 安装指引：[boost安装指引](https://www.cxymm.net/article/hacker_lpy/95211566)
 - `openssl` 签名的计算依赖openssl,这里建议使用[官网](https://www.openssl.org/source/) 提供的1.1.1版本，签名的方式参见[文档](https://cloud.tencent.com/document/product/614/12445)
 
 
