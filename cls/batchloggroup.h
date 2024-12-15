@@ -8,10 +8,11 @@
 #include <mutex>
 #include <vector>
 #include <memory>
-#include <boost/thread/shared_mutex.hpp>
 #include <thread>
 #include "error.h"
 #include <atomic>
+#include "util/thread_rwlock.h"
+
 namespace tencent_log_sdk_cpp_v2
 {
 
@@ -38,7 +39,7 @@ public:
 
 private:
     std::atomic<std::uint64_t> totaldatasize_;
-    mutable boost::shared_mutex mutex_;
+    mutable ThreadRWLocker mutex_;
     cls::LogGroup loggroup_;
     std::atomic<std::uint64_t> createtimems_;
     std::string topicid_;
