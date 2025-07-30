@@ -543,7 +543,7 @@ TEST(tencent_log_sdk_test, retry_2)
 {
     cls_config::LogProducerConfig config;
     config.set_endpoint("ap-guangzhou.cls.tencentcs.com");
-    config.set_acceskeyid(“”);
+    config.set_acceskeyid("");
     config.set_accesskeysecret("");
     // config.set_maxbatchsize(1024 * 1024); //这里设置成1M
     config.set_lingerms(1);

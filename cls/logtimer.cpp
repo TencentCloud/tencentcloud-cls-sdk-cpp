@@ -1,5 +1,6 @@
 #include "logtimer.h"
 #include "utils.h"
+#include "util/thread_rwlock.h"
 
 #include <thread>
 
@@ -20,7 +21,7 @@ void LogTimer::_TimerStart()
         int64_t nowTimeMs = GetNowTimeMs();
         {
 
-            boost::unique_lock<boost::shared_mutex> lock(logaccumulator_->mutex_);
+            ThreadWLock lock(mutex_);
             for (auto topicdata : logaccumulator_->GetlogTopicData())
             {
                 int timeInterval = (topicdata.second)->GetCreateTimeMs() + config_.lingerms() - nowTimeMs;
@@ -45,7 +46,7 @@ void LogTimer::_TimerStart()
         auto vecRetryQueue = retryqueue_->GetRetryBatch();
         if (!vecRetryQueue.empty())
         {
-            boost::unique_lock<boost::shared_mutex> lock(logaccumulator_->mutex_);
+            ThreadRLock lock(logaccumulator_->mutex_);
             for (auto pBatch : vecRetryQueue)
             {
                 ErrCode ret = logaccumulator_->AddTask(pBatch->getTopicID(), pBatch);
@@ -63,7 +64,7 @@ void LogTimer::_TimerStart()
     }
 
     {
-        boost::unique_lock<boost::shared_mutex> lock(logaccumulator_->mutex_);
+        ThreadRLock lock(logaccumulator_->mutex_);
         for (auto topicdata : logaccumulator_->GetlogTopicData())
         {
             ErrCode ret = logaccumulator_->AddTask(topicdata.first, topicdata.second);
