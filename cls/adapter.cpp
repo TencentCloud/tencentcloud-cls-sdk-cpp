@@ -262,7 +262,7 @@ void LOGAdapter::Send(const string& httpMethod, const string& host, const int32_
         if (httpMethod == HTTP_POST)
         {
             curl_easy_setopt(curl, CURLOPT_POST, 1);
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, body.size());
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, static_cast<curl_off_t>(body.size()));
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
         }
         else if (httpMethod == HTTP_DELETE)
@@ -272,7 +272,7 @@ void LOGAdapter::Send(const string& httpMethod, const string& host, const int32_
         else if (httpMethod == HTTP_PUT)
         {
             curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, HTTP_PUT);
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, body.size());
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, static_cast<curl_off_t>(body.size()));
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
         }
 
